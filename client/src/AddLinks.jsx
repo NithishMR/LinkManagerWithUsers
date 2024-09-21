@@ -1,25 +1,19 @@
 import SearchCategory from "./Components/SearchCategory";
-import SideBar from "./Components/Sidebar";
+import SideBar from "./Components/SideBar";
 
 function AddLinks() {
   return (
-    <>
-      <div className="">
-        <div className="flex h-[100vh]">
-          {/* Sidebar with fixed width */}
-          <div className="w-16">
-            <SideBar />
-          </div>
-
-          {/* Search section that takes the remaining space */}
-          <div className="flex-1">
-            <div className="w-[90%] m-auto ">
-              <SearchCategory />
-            </div>
-          </div>
+    <div className="flex">
+      <div className="w-16 fixed h-full">
+        <SideBar />
+      </div>
+      <div className="flex-1 ml-16">
+        <div className="w-[90%] m-auto">
+          <SearchCategory />
         </div>
       </div>
-    </>
+    </div>
   );
 }
+
 export default AddLinks;

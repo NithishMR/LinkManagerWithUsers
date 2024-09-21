@@ -55,7 +55,17 @@ app.get("/getCountOfLinks", async (req, res) => {
     res.status(500).send("Server Error");
   }
 });
-
+app.get("/links-by-category", async (req, res) => {
+  try {
+    const result = await pool.query(
+      "SELECT category, COUNT(*) AS count FROM links GROUP BY category "
+    );
+    return res.json(result.rows);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Server error" });
+  }
+});
 app.get("/addCategory", async (req, res) => {
   try {
     const result = await pool.query(

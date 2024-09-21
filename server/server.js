@@ -98,6 +98,27 @@ app.post("/add", async (req, res) => {
     res.status(500).send("Server Error");
   }
 });
+app.post("/addCategory", async (req, res) => {
+  const { category } = req.body; // Change 'name' to 'category'
+
+  if (!category) {
+    return res.status(400).json({ message: "Category name is required" });
+  }
+
+  try {
+    console.log("Inserting category:", category); // Log for debugging
+    const result = await pool.query(
+      "INSERT INTO category (category) VALUES ($1)", // Ensure table name matches
+      [category]
+    );
+    console.log("Insert result:", result); // Log the result of the insert
+    return res.status(201).json({ message: "Category added successfully" });
+  } catch (err) {
+    console.error("Database error:", err); // Log the error for debugging
+    res.status(500).send("Server Error");
+  }
+});
+
 app.delete("/category/:sno", async (req, res) => {
   // Ensure the parameter matches
   const categorySno = req.params.sno;
@@ -118,6 +139,25 @@ app.delete("/category/:sno", async (req, res) => {
   }
 });
 
+app.delete("/deleteLink/:sno", async (req, res) => {
+  // Ensure the parameter matches
+  const categorySno = req.params.sno;
+
+  try {
+    const result = await pool.query("DELETE FROM links WHERE id = $1", [
+      categorySno,
+    ]);
+
+    if (result.rowCount === 0) {
+      return res.status(404).json({ error: "Category not found" });
+    }
+
+    res.status(200).json({ message: "Category deleted successfully" });
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("Server error");
+  }
+});
 // Start the server and listen on the specified port
 app.listen(PORT, () => {
   console.log(`The server is running at http://localhost:${PORT}/`);

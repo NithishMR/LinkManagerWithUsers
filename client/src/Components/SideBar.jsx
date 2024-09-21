@@ -28,11 +28,13 @@ function SideBar() {
                 </div>
               </div>
             </Link>
-            <div className="tooltip tooltip-right" data-tip="Manage">
-              <div className="p-2 hover:bg-gray-400 rounded-lg">
-                <img src="../images/manage.svg" alt="Manage" />
+            <Link to={"/Manage"}>
+              <div className="tooltip tooltip-right" data-tip="Manage">
+                <div className="p-2 hover:bg-gray-400 rounded-lg">
+                  <img src="../images/manage.svg" alt="Manage" />
+                </div>
               </div>
-            </div>
+            </Link>
             <Link to={"/addCategory"}>
               <div className="tooltip tooltip-right" data-tip=" Categories">
                 <div className="p-2 hover:bg-gray-400 rounded-lg">

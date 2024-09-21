@@ -3,6 +3,7 @@ import MainPage from "./MainPage";
 import AddLinks from "./AddLinks";
 import AddCategory from "./AddCategory";
 import Dashboard from "./Dashboard";
+import ManagePage from "./ManagePage";
 function App() {
   return (
     <>
@@ -11,6 +12,7 @@ function App() {
         <Route path="/add" element={<AddLinks />} />
         <Route path="/addCategory" element={<AddCategory />} />
         <Route path="/Dashboard" element={<Dashboard />} />
+        <Route path="/Manage" element={<ManagePage />} />
       </Routes>
     </>
   );

@@ -4,15 +4,20 @@ import AddLinks from "./AddLinks";
 import AddCategory from "./AddCategory";
 import Dashboard from "./Dashboard";
 import ManagePage from "./ManagePage";
+import Settings from "./Settings";
+import HomePage from "./HomePage";
+
 function App() {
   return (
     <>
       <Routes>
-        <Route path="/" element={<MainPage />} />
+        <Route path="/" element={<HomePage />} />
+        <Route path="/search" element={<MainPage />} />
         <Route path="/add" element={<AddLinks />} />
         <Route path="/addCategory" element={<AddCategory />} />
         <Route path="/Dashboard" element={<Dashboard />} />
         <Route path="/Manage" element={<ManagePage />} />
+        <Route path="/settings" element={<Settings />} />
       </Routes>
     </>
   );

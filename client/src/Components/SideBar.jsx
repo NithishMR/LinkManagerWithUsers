@@ -7,10 +7,17 @@ function SideBar() {
         <div className="flex flex-col justify-between items-center h-full pt-4">
           {/* Top section with three icons */}
           <div className="flex flex-col gap-4">
-            <Link to="/">
-              <div className="tooltip tooltip-right" data-tip="Home">
+            <Link to={"/"}>
+              <div className="tooltip tooltip-right" data-tip=" Home">
                 <div className="p-2 hover:bg-gray-400 rounded-lg">
-                  <img src="/images/Home.svg" alt="home" />
+                  <img src="../images/Home.svg" alt="Home" />
+                </div>
+              </div>
+            </Link>
+            <Link to="/search">
+              <div className="tooltip tooltip-right" data-tip="Search">
+                <div className="p-2 hover:bg-gray-400 rounded-lg">
+                  <img src="/images/search.svg" alt="search" />
                 </div>
               </div>
             </Link>
@@ -44,13 +51,15 @@ function SideBar() {
             </Link>
           </div>
           <div className="">
-            <div className="tooltip tooltip-right" data-tip="Settings">
-              <div className="px-2 pt-2 hover:bg-gray-400 rounded-lg">
-                <div className="pb-2">
-                  <img src="../images/settings.svg" alt="Settings" />
+            <Link to={"/settings"}>
+              <div className="tooltip tooltip-right" data-tip="Settings">
+                <div className="px-2 pt-2 hover:bg-gray-400 rounded-lg">
+                  <div className="pb-2">
+                    <img src="../images/settings.svg" alt="Settings" />
+                  </div>
                 </div>
               </div>
-            </div>
+            </Link>
           </div>
         </div>
       </div>

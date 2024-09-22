@@ -1,3 +1,18 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.welcomeMessage {
+  animation-name: message;
+  animation-duration: 2s; /* Adjust duration as needed */
+  animation-fill-mode: forwards; /* Ensures the final state is maintained */
+}
+
+@keyframes message {
+  0% {
+    opacity: 0%;
+  }
+  100% {
+    opacity: 100%;
+  }
+}

@@ -1,7 +1,14 @@
-import Search from "./Components/Search";
-import SideBar from "./Components/SideBar";
+import { useState } from "react";
 import TableForManage from "./Components/TableForMange";
+import SearchForManagePage from "./Components/SearchForManagePage";
+import SideBar from "./Components/SideBar";
+
 function ManagePage() {
+  // State to store the search query
+  const [searchQuery, setSearchQuery] = useState("");
+  // State to store the selected category
+  const [selectedCategory, setSelectedCategory] = useState("");
+
   return (
     <>
       <div className="flex h-[100vh]">
@@ -10,10 +17,18 @@ function ManagePage() {
         </div>
 
         <div className="flex-1 ml-16 overflow-auto">
-          <div className="w-[70%] m-auto ">
-            <Search />
+          <div className="w-[90%] m-auto ">
+            {/* Pass setSearchQuery and setSelectedCategory to Search component */}
+            <SearchForManagePage
+              setSearchQuery={setSearchQuery}
+              setSelectedCategory={setSelectedCategory}
+            />
             <div className="pt-14">
-              <TableForManage />
+              {/* Pass searchQuery and selectedCategory to TableForManage */}
+              <TableForManage
+                searchQuery={searchQuery}
+                selectedCategory={selectedCategory}
+              />
             </div>
           </div>
         </div>
@@ -21,4 +36,5 @@ function ManagePage() {
     </>
   );
 }
+
 export default ManagePage;

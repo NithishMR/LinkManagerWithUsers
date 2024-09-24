@@ -1,7 +1,7 @@
 import { useState } from "react";
 import CategorySelect from "./CategorySelect";
 
-function Search({ setSearchQuery, setSelectedCategory }) {
+function SearchForMainPage({ setSearchQuery, setSelectedCategory }) {
   const [inputValue, setInputValue] = useState("");
 
   const handleSearch = () => {
@@ -39,4 +39,4 @@ function Search({ setSearchQuery, setSelectedCategory }) {
   );
 }
 
-export default Search;
+export default SearchForMainPage;

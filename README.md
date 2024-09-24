@@ -27,12 +27,7 @@
 </p>
 
 <h2 style="color: #333; font-family: Arial, sans-serif;">Screenshots</h2>
-<p style="font-family: Arial, sans-serif; font-size: 14px;">Below are some screenshots demonstrating the functionality of the Link Management System:</p>
-<ul style="font-family: Arial, sans-serif; font-size: 14px;">
-  <li><strong>Dashboard:</strong> A view of the user dashboard with options to filter and search through links.</li>
-  <li><strong>Link Management:</strong> A table showing links along with categories and the ability to delete or modify them.</li>
-</ul>
-
+<h3>Will update later</h3>
 <h2 style="color: #333; font-family: Arial, sans-serif;">Copyright & License</h2>
 <p style="font-family: Arial, sans-serif; font-size: 14px; color: #d9534f;"><strong>© 2024 Nithish MR. All rights reserved.</strong></p>
 <p style="font-family: Arial, sans-serif; font-size: 14px;">

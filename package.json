@@ -1,5 +1,14 @@
 {
+  "name": "link-manager",
+  "version": "1.0.0",
+  "description": "",
+  "scripts": {
+    "client": "npm run dev --prefix client",
+    "server": "npm run dev --prefix server",
+    "dev": "concurrently \"npm run client\" \"npm run server\""
+  },
   "dependencies": {
-    "daisyui": "^4.12.10"
+    "daisyui": "^4.12.10",
+    "concurrently": "^8.0.1"
   }
 }

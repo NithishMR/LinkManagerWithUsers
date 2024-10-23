@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-
+import { Toaster, toast } from "sonner";
 function TableForCategory() {
   const [category, setCategory] = useState([]);
 
@@ -23,6 +23,7 @@ function TableForCategory() {
   }, []);
 
   const handleDelete = async (sno) => {
+    toast.success("Link has been successfully deleted");
     try {
       const response = await fetch(`http://localhost:5000/category/${sno}`, {
         method: "DELETE",
@@ -60,6 +61,7 @@ function TableForCategory() {
                   <tr key={item.sno}>
                     <td>{index + 1}</td>
                     <td>{item.name}</td> {/* Change to item.category */}
+                    <Toaster richColors />
                     <td className="cursor-pointer">
                       <img
                         src="../images/delete.svg"

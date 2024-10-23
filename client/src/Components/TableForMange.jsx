@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { Toaster, toast } from "sonner";
 
 function TableForManage({ searchQuery, selectedCategory }) {
   const [links, setLinks] = useState([]);
@@ -22,6 +23,7 @@ function TableForManage({ searchQuery, selectedCategory }) {
   }, []);
 
   const handleDelete = async (id) => {
+    toast.success("Link has been successfully deleted");
     try {
       const response = await fetch(`http://localhost:5000/deleteLink/${id}`, {
         method: "DELETE",
@@ -74,6 +76,7 @@ function TableForManage({ searchQuery, selectedCategory }) {
                 </td>
                 <td>{new Date(link.created_at).toLocaleDateString()}</td>
                 <td className="cursor-pointer">
+                  <Toaster richColors />
                   <img
                     src="../images/delete.svg"
                     alt="deleteIcon"

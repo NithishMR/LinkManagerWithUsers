@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
 
-function Table({ searchQuery, selectedCategory }) {
+function Table({ searchQuery, selectedCategory, user }) {
   const [links, setLinks] = useState([]);
 
   useEffect(() => {
     const getData = async () => {
       try {
-        const response = await fetch("http://localhost:5000/");
+        const response = await fetch(`http://localhost:5000/${user.sno}`); // This should now work as expected
         if (!response.ok) {
           console.error("Error fetching data");
           return;

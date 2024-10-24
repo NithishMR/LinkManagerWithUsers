@@ -3,7 +3,7 @@ import SearchForMainPage from "./Components/SearchForMainPage";
 import SideBar from "./Components/SideBar";
 import Table from "./Components/Table";
 
-function MainPage() {
+function MainPage({ user }) {
   // State to store the search query
   const [searchQuery, setSearchQuery] = useState("");
   // State to store the selected category
@@ -26,6 +26,7 @@ function MainPage() {
             <Table
               searchQuery={searchQuery}
               selectedCategory={selectedCategory}
+              user={user}
             />
           </div>
         </div>

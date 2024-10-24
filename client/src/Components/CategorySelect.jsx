@@ -6,7 +6,7 @@ function CategorySelect({ onChange }) {
   useEffect(() => {
     const getData = async () => {
       try {
-        const response = await fetch("http://localhost:5000/add");
+        const response = await fetch("http://localhost:5000/getCategory");
         if (!response.ok) {
           console.error("Error fetching data");
           return;

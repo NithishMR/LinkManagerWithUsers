@@ -21,24 +21,22 @@ const pool = new Pool({
   port: process.env.DB_PORT,
 });
 
-// API route to get all links data
-app.get("/", async (req, res) => {
-  try {
-    const result = await pool.query(
-      "SELECT id, category, url, created_at, title FROM links"
-    );
-    return res.json(result.rows);
-  } catch (err) {
-    console.error(err);
-    res.status(500).send("Server Error");
-  }
-});
-
-// API route to get unique categories
-app.get("/add", async (req, res) => {
+app.get("/getCategory", async (req, res) => {
   try {
     const result = await pool.query(
       "SELECT DISTINCT category AS name FROM category"
+    );
+    console.log("Query Result:", result.rows); // Log the result for verification
+    return res.json(result.rows);
+  } catch (err) {
+    console.error("Error occurred:", err); // Log any errors
+    res.status(500).send("Server Error");
+  }
+});
+app.get("/addCategory", async (req, res) => {
+  try {
+    const result = await pool.query(
+      "SELECT sno, category AS name FROM category"
     );
     return res.json(result.rows); // Return an array of objects with a `name` field
   } catch (err) {
@@ -66,17 +64,80 @@ app.get("/links-by-category", async (req, res) => {
     res.status(500).json({ error: "Server error" });
   }
 });
-app.get("/addCategory", async (req, res) => {
+// API route to get all links data
+app.get("/:userId", async (req, res) => {
+  const userId = req.params.userId; // Get the user ID from the route parameters
   try {
     const result = await pool.query(
-      "SELECT sno, category AS name FROM category"
+      "SELECT id, category, url, created_at, title FROM links WHERE user_id = $1", // Use parameterized queries to prevent SQL injection
+      [userId]
     );
-    return res.json(result.rows); // Return an array of objects with a `name` field
+    return res.json(result.rows);
   } catch (err) {
     console.error(err);
     res.status(500).send("Server Error");
   }
 });
+
+// for the signup page, this is prototyping
+app.post("/signup", async (req, res) => {
+  const { username, emailid, password } = req.body;
+
+  if (!emailid || !username || !password) {
+    return res.status(400).json({ message: "All fields are required" });
+  }
+
+  try {
+    // Insert user data into the 'users' table
+    const result = await pool.query(
+      "INSERT INTO users (usrname, emailid, password) VALUES ($1, $2, $3) RETURNING sno", // Use 'sno' here
+      [username, emailid, password]
+    );
+
+    return res.status(201).json({
+      message: "User registered successfully",
+      userId: result.rows[0].sno, // Use 'sno' instead of 'id'
+    });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: "Server error" });
+  }
+});
+// sign in part, also a try
+
+app.post("/signin", async (req, res) => {
+  const { email, password } = req.body;
+
+  try {
+    const userQuery = await pool.query(
+      "SELECT * FROM users WHERE emailid = $1",
+      [email]
+    );
+
+    if (userQuery.rows.length > 0) {
+      const user = userQuery.rows[0];
+
+      // Replace this line with password hashing comparison in production
+      if (user.password === password) {
+        const { sno, usrname, emailid } = user; // Destructure user for specific fields
+        return res.status(200).json({
+          message: "User signed in successfully",
+          user: { sno, usrname, emailid },
+        });
+      } else {
+        return res.status(401).json({ message: "Invalid password" });
+      }
+    } else {
+      return res.status(404).json({ message: "User does not exist" });
+    }
+  } catch (error) {
+    console.error("Error signing in:", error);
+    return res.status(500).json({ message: "Server error" });
+  }
+});
+
+// API route to get unique categories
+
 // API route to add a new link
 app.post("/add", async (req, res) => {
   const { link, category, description, title } = req.body; // Destructure incoming request body
@@ -160,5 +221,5 @@ app.delete("/deleteLink/:sno", async (req, res) => {
 });
 // Start the server and listen on the specified port
 app.listen(PORT, () => {
-  console.log(`The server is running at http://localhost:${PORT}/`);
+  console.log(`The server is running `);
 });

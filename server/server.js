@@ -44,37 +44,48 @@ app.get("/addCategory", async (req, res) => {
     res.status(500).send("Server Error");
   }
 });
-app.get("/getCountOfLinks", async (req, res) => {
+app.get("/getCountOfLinks/:userId", async (req, res) => {
+  const userId = req.params.userId; // Get userId from request parameters
   try {
-    const result = await pool.query("SELECT COUNT(*) as count FROM links");
+    const result = await pool.query(
+      "SELECT COUNT(*) as count FROM links WHERE user_id = $1",
+      [userId]
+    );
     return res.json({ count: result.rows[0].count }); // Return the count as an object
   } catch (err) {
     console.error(err);
     res.status(500).send("Server Error");
   }
 });
-app.get("/links-by-category", async (req, res) => {
+
+app.get("/links-by-category/:userId", async (req, res) => {
+  const userId = req.params.userId; // Extracting userId from the request parameters
   try {
     const result = await pool.query(
-      "SELECT category, COUNT(*) AS count FROM links GROUP BY category "
-    );
-    return res.json(result.rows);
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: "Server error" });
-  }
-});
-// API route to get all links data
-app.get("/:userId", async (req, res) => {
-  const userId = req.params.userId; // Get the user ID from the route parameters
-  try {
-    const result = await pool.query(
-      "SELECT id, category, url, created_at, title FROM links WHERE user_id = $1", // Use parameterized queries to prevent SQL injection
+      "SELECT category, COUNT(*) AS count FROM links WHERE user_id = $1 GROUP BY category", // Added space before GROUP BY
       [userId]
     );
     return res.json(result.rows);
+  } catch (error) {
+    console.error("Database Error:", error); // Added context to the error log
+    res.status(500).json({ error: "Server error" });
+  }
+});
+
+// API route to get all links data
+app.get("/:userId", async (req, res) => {
+  const userId = req.params.userId;
+  console.log("Received User ID:", userId); // Log the user ID to verify
+
+  try {
+    const result = await pool.query(
+      "SELECT id, category, url, created_at, title FROM links WHERE user_id = $1",
+      [userId]
+    );
+    console.log("Database Query Result:", result.rows); // Log the fetched rows
+    return res.json(result.rows); // Send the response
   } catch (err) {
-    console.error(err);
+    console.error("Database Error:", err);
     res.status(500).send("Server Error");
   }
 });
@@ -140,7 +151,7 @@ app.post("/signin", async (req, res) => {
 
 // API route to add a new link
 app.post("/add", async (req, res) => {
-  const { link, category, description, title } = req.body; // Destructure incoming request body
+  const { link, category, description, title, sno } = req.body; // Destructure incoming request body
 
   // Check if all required fields are provided
   if (!link || !category || !description || !title) {
@@ -150,8 +161,8 @@ app.post("/add", async (req, res) => {
   try {
     // Insert new link into the 'links' table
     const result = await pool.query(
-      "INSERT INTO links (url, category, description, title) VALUES ($1, $2, $3, $4)",
-      [link, category, description, title]
+      "INSERT INTO links (url, category, description, title,user_id) VALUES ($1, $2, $3, $4,$5)",
+      [link, category, description, title, sno]
     );
     return res.status(201).json({ message: "Link added successfully" });
   } catch (err) {

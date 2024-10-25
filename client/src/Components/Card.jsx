@@ -1,18 +1,21 @@
 import { useEffect, useState } from "react";
 
-function Card() {
+function Card({ user }) {
   const [count, setCount] = useState(0); // Final count from the server
   const [displayCount, setDisplayCount] = useState(0); // Count displayed in the card
 
   useEffect(() => {
     const getData = async () => {
       try {
-        const response = await fetch("http://localhost:5000/getCountOfLinks");
+        const response = await fetch(
+          `http://localhost:5000/getCountOfLinks/${user.sno}`
+        );
         if (!response.ok) {
           console.error("Error fetching data");
           return;
         }
         const data = await response.json();
+        console.log(data);
         setCount(data.count); // Set the count from the fetched data
       } catch (error) {
         console.error("Error: ", error);

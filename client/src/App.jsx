@@ -33,25 +33,37 @@ function App() {
         <Route
           path="/add"
           element={
-            <PrivateRoute element={<AddLinks />} isAuthenticated={!!user} />
+            <PrivateRoute
+              element={<AddLinks user={user} />}
+              isAuthenticated={!!user}
+            />
           }
         />
         <Route
           path="/addCategory"
           element={
-            <PrivateRoute element={<AddCategory />} isAuthenticated={!!user} />
+            <PrivateRoute
+              element={<AddCategory user={user} />}
+              isAuthenticated={!!user}
+            />
           }
         />
         <Route
           path="/Dashboard"
           element={
-            <PrivateRoute element={<Dashboard />} isAuthenticated={!!user} />
+            <PrivateRoute
+              element={<Dashboard user={user} />}
+              isAuthenticated={!!user}
+            />
           }
         />
         <Route
           path="/Manage"
           element={
-            <PrivateRoute element={<ManagePage />} isAuthenticated={!!user} />
+            <PrivateRoute
+              element={<ManagePage user={user} />}
+              isAuthenticated={!!user}
+            />
           }
         />
         <Route

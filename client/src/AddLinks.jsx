@@ -1,7 +1,7 @@
 import SearchCategory from "./Components/SearchCategory";
 import SideBar from "./Components/SideBar";
 
-function AddLinks() {
+function AddLinks({ user }) {
   return (
     <div className="flex">
       <div className="w-16 fixed h-full">
@@ -9,7 +9,7 @@ function AddLinks() {
       </div>
       <div className="flex-1 ml-16">
         <div className="w-[90%] m-auto">
-          <SearchCategory />
+          <SearchCategory user={user} />
         </div>
       </div>
     </div>

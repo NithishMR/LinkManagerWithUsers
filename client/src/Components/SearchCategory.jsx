@@ -2,13 +2,13 @@ import { useState } from "react";
 import CategorySelect from "./CategorySelect";
 import { Toaster, toast } from "sonner";
 
-function SearchCategory() {
+function SearchCategory({ user }) {
   const [link, setLink] = useState("");
   const [category, setCategory] = useState("");
   const [description, setDescription] = useState("");
   const [title, setTitle] = useState("");
   const [errorMessage, setErrorMessage] = useState(null);
-
+  const [sno, setSno] = useState(user.sno);
   const handleLinkChange = (e) => setLink(e.target.value);
   const handleCategoryChange = (e) => setCategory(e.target.value);
   const handleDescriptionChange = (e) => setDescription(e.target.value);
@@ -27,7 +27,7 @@ function SearchCategory() {
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify({ link, category, description, title }),
+          body: JSON.stringify({ link, category, description, title, sno }),
         }),
         {
           loading: "Saving your link...",

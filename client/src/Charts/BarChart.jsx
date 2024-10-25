@@ -20,7 +20,7 @@ ChartJS.register(
   Legend
 );
 
-const BarChart = () => {
+const BarChart = ({ user }) => {
   const [chartData, setChartData] = useState({
     labels: [],
     datasets: [
@@ -39,7 +39,9 @@ const BarChart = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch("http://localhost:5000/links-by-category");
+        const response = await fetch(
+          `http://localhost:5000/links-by-category/${user.sno}`
+        );
         if (!response.ok) {
           throw new Error("Network response was not ok");
         }

@@ -13,6 +13,7 @@ function Table({ searchQuery, selectedCategory, user }) {
         }
         const data = await response.json();
         setLinks(data);
+        console.log(data);
       } catch (error) {
         console.error("Error: ", error);
       }

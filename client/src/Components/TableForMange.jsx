@@ -1,13 +1,13 @@
 import { useEffect, useState } from "react";
 import { Toaster, toast } from "sonner";
 
-function TableForManage({ searchQuery, selectedCategory }) {
+function TableForManage({ searchQuery, selectedCategory, user }) {
   const [links, setLinks] = useState([]);
 
   useEffect(() => {
     const getData = async () => {
       try {
-        const response = await fetch("http://localhost:5000/");
+        const response = await fetch(`http://localhost:5000/${user.sno}`);
         if (!response.ok) {
           console.error("Error fetching data");
           return;
@@ -23,15 +23,18 @@ function TableForManage({ searchQuery, selectedCategory }) {
   }, []);
 
   const handleDelete = async (id) => {
-    toast.success("Link has been successfully deleted");
     try {
-      const response = await fetch(`http://localhost:5000/deleteLink/${id}`, {
-        method: "DELETE",
-      });
+      const response = await fetch(
+        `http://localhost:5000/deleteLink/${user.sno}`,
+        {
+          method: "DELETE",
+        }
+      );
 
       if (response.ok) {
         // If delete was successful, update the state
         setLinks((prevLinks) => prevLinks.filter((link) => link.id !== id));
+        toast.success("Link has been successfully deleted");
       } else {
         console.error("Failed to delete the link");
       }

@@ -5,7 +5,7 @@ import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
 // Register the required components
 ChartJS.register(ArcElement, Tooltip, Legend);
 
-const PieChart = () => {
+const PieChart = ({ user }) => {
   const [chartData, setChartData] = useState({
     labels: [],
     datasets: [
@@ -20,7 +20,9 @@ const PieChart = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch("http://localhost:5000/links-by-category");
+        const response = await fetch(
+          `http://localhost:5000/links-by-category/${user.sno}` // Fetching data for the specific user
+        );
         if (!response.ok) {
           throw new Error("Network response was not ok");
         }
@@ -30,6 +32,7 @@ const PieChart = () => {
         const categories = data.map((item) => item.category);
         const counts = data.map((item) => item.count);
 
+        // Set chart data
         setChartData({
           labels: categories,
           datasets: [
@@ -54,9 +57,9 @@ const PieChart = () => {
     };
 
     fetchData();
-  }, []);
+  }, [user.sno]); // Dependency array includes user.sno to refetch when it changes
 
-  if (loading) return <p>Loading...</p>;
+  if (loading) return <p>Loading...</p>; // Show loading text while fetching data
 
   return (
     <div>

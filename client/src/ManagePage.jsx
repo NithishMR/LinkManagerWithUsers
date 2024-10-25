@@ -3,7 +3,7 @@ import TableForManage from "./Components/TableForMange";
 import SearchForManagePage from "./Components/SearchForManagePage";
 import SideBar from "./Components/SideBar";
 
-function ManagePage() {
+function ManagePage({ user }) {
   // State to store the search query
   const [searchQuery, setSearchQuery] = useState("");
   // State to store the selected category
@@ -28,6 +28,7 @@ function ManagePage() {
               <TableForManage
                 searchQuery={searchQuery}
                 selectedCategory={selectedCategory}
+                user={user}
               />
             </div>
           </div>

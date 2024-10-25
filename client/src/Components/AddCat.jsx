@@ -29,7 +29,7 @@ function AddCat() {
       if (!response.ok) {
         throw new Error("Failed to save category");
       }
-
+      toast.success("Category has been successfully added");
       // Clear input and error message on successful submission
       setCategory("");
       setErrorMessage(null);

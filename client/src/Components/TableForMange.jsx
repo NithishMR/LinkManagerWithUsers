@@ -14,18 +14,20 @@ function TableForManage({ searchQuery, selectedCategory, user }) {
         }
         const data = await response.json();
         setLinks(data);
+        console.log(links);
       } catch (error) {
         console.error("Error: ", error);
       }
     };
 
     getData();
-  }, []);
+  }, [user.sno]); // Added user.sno as a dependency
 
-  const handleDelete = async (id) => {
+  const handleDelete = async (linkNumber) => {
     try {
+      console.log(linkNumber);
       const response = await fetch(
-        `http://localhost:5000/deleteLink/${user.sno}`,
+        `http://localhost:5000/deleteLink/${user.sno}/${linkNumber}`, // Send both user ID and link number
         {
           method: "DELETE",
         }
@@ -33,13 +35,17 @@ function TableForManage({ searchQuery, selectedCategory, user }) {
 
       if (response.ok) {
         // If delete was successful, update the state
-        setLinks((prevLinks) => prevLinks.filter((link) => link.id !== id));
         toast.success("Link has been successfully deleted");
+        setLinks((prevLinks) =>
+          prevLinks.filter((link) => link.linknumber !== linkNumber)
+        );
       } else {
         console.error("Failed to delete the link");
+        toast.error("Failed to delete the link");
       }
     } catch (error) {
       console.error("Error: ", error);
+      toast.error("An error occurred while deleting the link.");
     }
   };
 
@@ -56,6 +62,7 @@ function TableForManage({ searchQuery, selectedCategory, user }) {
 
   return (
     <div className="overflow-x-auto">
+      <Toaster richColors />
       <table className="table">
         <thead>
           <tr>
@@ -70,7 +77,7 @@ function TableForManage({ searchQuery, selectedCategory, user }) {
           {filteredLinks.length > 0 ? (
             filteredLinks.map((link, index) => (
               <tr key={link.id}>
-                <td>{index + 1}</td>
+                <td>{link.linknumber}</td>
                 <td>{link.category}</td>
                 <td>
                   <a href={link.url} target="_blank" rel="noopener noreferrer">
@@ -83,7 +90,7 @@ function TableForManage({ searchQuery, selectedCategory, user }) {
                   <img
                     src="../images/delete.svg"
                     alt="deleteIcon"
-                    onClick={() => handleDelete(link.id)}
+                    onClick={() => handleDelete(link.linknumber)} // Pass linkNumber directly
                   />
                 </td>
               </tr>

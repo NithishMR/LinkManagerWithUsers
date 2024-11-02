@@ -79,7 +79,7 @@ app.get("/:userId", async (req, res) => {
 
   try {
     const result = await pool.query(
-      "SELECT id, category, url, created_at, title FROM links WHERE user_id = $1",
+      "SELECT id, category, url, created_at, title,linknumber FROM links WHERE user_id = $1",
       [userId]
     );
     console.log("Database Query Result:", result.rows); // Log the fetched rows
@@ -151,7 +151,7 @@ app.post("/signin", async (req, res) => {
 
 // API route to add a new link
 app.post("/add", async (req, res) => {
-  const { link, category, description, title, sno } = req.body; // Destructure incoming request body
+  const { link, category, description, title, sno, linkNumber } = req.body; // Destructure incoming request body
 
   // Check if all required fields are provided
   if (!link || !category || !description || !title) {
@@ -161,8 +161,8 @@ app.post("/add", async (req, res) => {
   try {
     // Insert new link into the 'links' table
     const result = await pool.query(
-      "INSERT INTO links (url, category, description, title,user_id) VALUES ($1, $2, $3, $4,$5)",
-      [link, category, description, title, sno]
+      "INSERT INTO links (url, category, description, title,user_id,linknumber) VALUES ($1, $2, $3, $4,$5,$6)",
+      [link, category, description, title, sno, linkNumber]
     );
     return res.status(201).json({ message: "Link added successfully" });
   } catch (err) {
@@ -211,25 +211,27 @@ app.delete("/category/:sno", async (req, res) => {
   }
 });
 
-app.delete("/deleteLink/:sno", async (req, res) => {
-  // Ensure the parameter matches
-  const categorySno = req.params.sno;
+app.delete("/deleteLink/:sno/:linkNumber", async (req, res) => {
+  const userId = req.params.sno; // Extract user_id
+  const linkNumber = req.params.linkNumber; // Extract linknumber
 
   try {
-    const result = await pool.query("DELETE FROM links WHERE id = $1", [
-      categorySno,
-    ]);
+    const result = await pool.query(
+      "DELETE FROM links WHERE user_id = $1 AND linknumber = $2",
+      [userId, linkNumber]
+    );
 
     if (result.rowCount === 0) {
-      return res.status(404).json({ error: "Category not found" });
+      return res.status(404).json({ error: "Link not found" });
     }
 
-    res.status(200).json({ message: "Category deleted successfully" });
+    res.status(200).json({ message: "Link deleted successfully" });
   } catch (err) {
     console.error(err);
     res.status(500).send("Server error");
   }
 });
+
 // Start the server and listen on the specified port
 app.listen(PORT, () => {
   console.log(`The server is running `);

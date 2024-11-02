@@ -1,5 +1,5 @@
 import { useState } from "react";
-
+import { Toaster, toast } from "sonner";
 function AddCat() {
   const [category, setCategory] = useState(""); // Ensure variable is category
   const [errorMessage, setErrorMessage] = useState(null); // For error messages

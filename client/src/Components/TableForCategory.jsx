@@ -35,6 +35,7 @@ function TableForCategory() {
           prevCategory.filter((item) => item.sno !== sno)
         );
         console.log("Category deleted successfully");
+        toast.success("Category deleted successfully");
       } else {
         console.error("Failed to delete category");
       }

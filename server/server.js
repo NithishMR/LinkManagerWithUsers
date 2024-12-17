@@ -82,7 +82,7 @@ app.get("/:userId", async (req, res) => {
       "SELECT id, category, url, created_at, title,linknumber FROM links WHERE user_id = $1",
       [userId]
     );
-    console.log("Database Query Result:", result.rows); // Log the fetched rows
+    // console.log("Database Query Result:", result.rows); // Log the fetched rows
     return res.json(result.rows); // Send the response
   } catch (err) {
     console.error("Database Error:", err);
@@ -178,12 +178,12 @@ app.post("/addCategory", async (req, res) => {
   }
 
   try {
-    console.log("Inserting category:", category); // Log for debugging
+    // console.log("Inserting category:", category); // Log for debugging
     const result = await pool.query(
       "INSERT INTO category (category) VALUES ($1)", // Ensure table name matches
       [category]
     );
-    console.log("Insert result:", result); // Log the result of the insert
+    // console.log("Insert result:", result); // Log the result of the insert
     return res.status(201).json({ message: "Category added successfully" });
   } catch (err) {
     console.error("Database error:", err); // Log the error for debugging

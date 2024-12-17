@@ -20,11 +20,11 @@
   <li><strong>Backend:</strong> Node.js, Express</li>
   <li><strong>Database:</strong> PostgreSQL</li>
 </ul>
-
+<!--
 <h2 style="color: #333; font-family: Arial, sans-serif;">Database Setup</h2>
 <p style="font-family: Arial, sans-serif; font-size: 14px;">
   For privacy reasons, the detailed database schema is not shared publicly. Please contact me directly if you need more information regarding the database setup.
-</p>
+</p>-->
 
 <h2 style="color: #333; font-family: Arial, sans-serif;">Screenshots</h2>
 <h3>Will update later</h3>

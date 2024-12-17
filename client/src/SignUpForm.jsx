@@ -28,7 +28,7 @@ function SignUpForm() {
       const result = await response.json();
 
       if (response.ok) {
-        console.log("User registered:", result);
+        // console.log("User registered:", result);
         alert("User registered successfully!");
       } else {
         console.error("Signup failed:", result.message);

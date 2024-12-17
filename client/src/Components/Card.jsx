@@ -15,7 +15,7 @@ function Card({ user }) {
           return;
         }
         const data = await response.json();
-        console.log(data);
+        // console.log(data);
         setCount(data.count); // Set the count from the fetched data
       } catch (error) {
         console.error("Error: ", error);

@@ -1,5 +1,5 @@
 import { Routes, Route } from "react-router-dom";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import MainPage from "./MainPage";
 import AddLinks from "./AddLinks";
 import AddCategory from "./AddCategory";
@@ -9,12 +9,21 @@ import Settings from "./Settings";
 import HomePage from "./HomePage";
 import SignUpForm from "./SignUpForm";
 import SignInForm from "./SignInForm";
-import PrivateRoute from "./Components/PrivateRoute"; // Import the PrivateRoute component
-function App() {
-  const [user, setUser] = useState(null); // Store user details here
+import PrivateRoute from "./Components/PrivateRoute";
 
+function App() {
+  const [user, setUser] = useState(() => {
+    const savedUser = sessionStorage.getItem("user");
+    return savedUser ? JSON.parse(savedUser) : null;
+  });
   const handleUserLogin = (userDetails) => {
-    setUser(userDetails); // Save user details when logging in
+    setUser(userDetails);
+    sessionStorage.setItem("user", JSON.stringify(userDetails));
+  };
+
+  const handleLogout = () => {
+    setUser(null);
+    sessionStorage.removeItem("user");
   };
 
   return (
@@ -69,7 +78,10 @@ function App() {
         <Route
           path="/settings"
           element={
-            <PrivateRoute element={<Settings />} isAuthenticated={!!user} />
+            <PrivateRoute
+              element={<Settings onLogout={handleLogout} />}
+              isAuthenticated={!!user}
+            />
           }
         />
         <Route path="/signup" element={<SignUpForm />} />

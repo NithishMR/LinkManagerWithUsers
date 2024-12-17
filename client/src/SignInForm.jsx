@@ -24,7 +24,7 @@ function SignInForm({ onUserLogin }) {
       const result = await response.json();
 
       if (response.ok) {
-        console.log("User signed in:", result);
+        // console.log("User signed in:", result);
         alert("User signed in successfully!");
         onUserLogin(result.user); // Pass user details to App component
         navigate("/"); // Redirect to the Dashboard after signing in

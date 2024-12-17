@@ -27,7 +27,7 @@ function SearchCategory({ user }) {
           return;
         }
         const data = await response.json();
-        console.log(data);
+        // console.log(data);
         setLinkLength(data.count); // Set the count from the fetched data
       } catch (error) {
         console.error("Error: ", error);

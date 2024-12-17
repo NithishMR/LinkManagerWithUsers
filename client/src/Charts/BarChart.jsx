@@ -46,7 +46,7 @@ const BarChart = ({ user }) => {
           throw new Error("Network response was not ok");
         }
         const data = await response.json();
-        console.log(data);
+        // console.log(data);
 
         const categories = data.map((item) => item.category);
         const counts = data.map((item) => item.count);

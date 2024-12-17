@@ -14,7 +14,7 @@ function TableForManage({ searchQuery, selectedCategory, user }) {
         }
         const data = await response.json();
         setLinks(data);
-        console.log(links);
+        // console.log(links);
       } catch (error) {
         console.error("Error: ", error);
       }

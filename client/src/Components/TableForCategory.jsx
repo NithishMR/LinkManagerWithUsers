@@ -12,7 +12,7 @@ function TableForCategory() {
           return;
         }
         const data = await response.json();
-        console.log(data);
+        // console.log(data);
         setCategory(data);
       } catch (error) {
         console.error("Error: ", error);
